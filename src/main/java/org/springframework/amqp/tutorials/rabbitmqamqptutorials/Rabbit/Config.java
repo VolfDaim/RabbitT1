@@ -1,3 +1,4 @@
+package org.springframework.amqp.tutorials.rabbitmqamqptutorials.Rabbit;
 
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Message;
@@ -15,7 +16,7 @@ public class Config {
 
     @Bean
     public CachingConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("192.168.1.205");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("192.168.1.205",5678);
         return connectionFactory;
     }
 
@@ -26,14 +27,14 @@ public class Config {
 
     @Bean
     public Queue queue(){
-        return new Queue("queue");
+        return new Queue("queueDima");
     }
 
     @Bean
     public SimpleMessageListenerContainer messageListenerContainer(){
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
-        container.setQueueNames("queue");
+        container.setQueueNames("queueDima");
         container.setMessageListener(new MessageListener() {
             @Override
             public void onMessage(Message message) {
